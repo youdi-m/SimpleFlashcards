@@ -1,2 +1,6 @@
 # SimpleFlashcards
-Simple flashcard program with some sorting features.
+
+## Features
+
+Reads cards from txt file
+Sorting feature based on performance

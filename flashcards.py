@@ -3,7 +3,8 @@ import random
 # original list of cards
 originalCards = {}
 
-# secondary list of cards based on how well the user did 
+#sorting list based on how well the user did
+# not implemented yet
 horribleScore = {}
 badScore = {}
 goodScore = {}
@@ -15,25 +16,18 @@ def createCards(file):
 	# opening file
 	file = open(file, "r")
 
-	# loop through text and add the accronyms and answers as hashmaps
+	# loop through text and add the accronyms and answers to the dict
 	for line in file:
 		key, ans = line.split(" ", 1)
-		originalCards[key] = key.strip()
+		originalCards[ans] = key.strip()
 
-# show every card once while sorting them
-def showCards(dict):
+# taking the keys from the dict so we can shuffle them in a list
+def shuffleCards(dict):
 
-	# create an iterable list to assign first dict keys to
-	# second key is still in original dict, we then shuffle the list
-	cards = list(originalCards.keys())
-	random.shuffle(cards)
+	shuffledCards = list(dict.keys())
+	random.shuffle(shuffledCards)
 
-	# TODO: break this into its own function
-	for card in cards:
-		# show accronym
-		print(card)
-
-		print(originalCards[card])
+	return shuffledCards
 
 createCards("flashcards.txt")
-showCards(originalCards)
+shuffledKeys = shuffleCards(originalCards)
