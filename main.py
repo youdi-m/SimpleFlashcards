@@ -6,7 +6,8 @@ import flashcards
 # creating window and setup
 root = Tk()
 root.title("Simple Flashcards")
-root.geometry("900x700")
+root.geometry("500x600") # width x height
+root.tk_setPalette(background='#282828', foreground='#ffffff')
 
 # setting applicaiton theme
 style = ttk.Style(root)
@@ -17,37 +18,61 @@ index = 0
 answer = StringVar(root)
 accronym = StringVar(root)
 
+# sorting lists based on how well the user did
+horribleScore = []
+badScore = []
+goodScore = []
+greatScore = []
+amazingScore = []
+
 # *** functions
+
+# change answer text to match the answer
 def showAnswer():
 	answer.set(flashcards.shuffledKeys[index])
+	showAnswerButton.pack_forget()
+	nextButton.pack(side='top', anchor='center', pady=10)
 
+
+# increment index, get next accronym and set answer text to nothing
 def showNext():
 	global index
 	index += 1
 	accronym.set(flashcards.originalCards[flashcards.shuffledKeys[index]])
-	answer.set("")
-
+	answer.set(" ")
+	nextButton.pack_forget()
+	showAnswerButton.pack(side='top', anchor='center', pady=10)
 
 # *** GUI elements
 
+# main frame to hold everything in place
+topFrame = Frame(root, height=300, width=600)
+topFrame.pack(expand=True)
+topFrame.pack_propagate(False)
+
+bottomFrame = Frame(root, height=200, width=600)
+bottomFrame.pack(expand=True)
+bottomFrame.pack_propagate(False)
+
 # show the accronym with a label
-showAccronymLabel = Label(root, textvariable=accronym,
-													font=("Arial", 24, "bold"), padx=225)
-showAccronymLabel.grid(row=0, column=0)
+showAccronymLabel = Label(topFrame, textvariable=accronym,
+													font=("Arial", 32, "bold"), wraplength=500)
+showAccronymLabel.pack(side='top', anchor='center', pady=10)
 
 accronym.set(flashcards.originalCards[flashcards.shuffledKeys[index]])
 
 # show answer with label, starts hidden
-showAnswerLabel = Label(root, textvariable=answer,
-												font=("Arial", 16, "bold"))
-showAnswerLabel.grid(row=1, column=0)
+showAnswerLabel = Label(topFrame, textvariable=answer,
+												font=("Arial", 24, "bold"), wraplength=500, pady=100)
+showAnswerLabel.pack(side='top', anchor='center')
+
+buttonFrame = Frame(root, )
 
 # button to show answer
-showAnswerButton = Button(root, text="Show Answer", command=showAnswer)
-showAnswerButton.grid(row=2, column=0)
+showAnswerButton = Button(bottomFrame, text="Show", command=showAnswer, width=13, font=("Arial", 10, "bold"))
+showAnswerButton.pack(side='top', anchor='center', pady=10)
 
-# next button
-nextButton = Button(root, text="Next", command=showNext)
-nextButton.grid(row=3, column=0)
+# button to show next card
+nextButton = Button(bottomFrame, text="Next", command=showNext, width=13, font=("Arial", 10, "bold"))
 
 root.mainloop()
