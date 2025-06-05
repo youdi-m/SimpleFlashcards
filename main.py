@@ -13,17 +13,12 @@ root.tk_setPalette(background='#282828', foreground='#ffffff')
 style = ttk.Style(root)
 style.theme_use("vista")
 
+
 # *** variables
 index = 0
 answer = StringVar(root)
 accronym = StringVar(root)
 
-# sorting lists based on how well the user did
-horribleScore = []
-badScore = []
-goodScore = []
-greatScore = []
-amazingScore = []
 
 # *** functions
 
@@ -43,6 +38,7 @@ def showNext():
 	nextButton.pack_forget()
 	showAnswerButton.pack(side='top', anchor='center', pady=10)
 
+
 # *** GUI elements
 
 # main frame to hold everything in place
@@ -54,25 +50,29 @@ bottomFrame = Frame(root, height=200, width=600)
 bottomFrame.pack(expand=True)
 bottomFrame.pack_propagate(False)
 
-# show the accronym with a label
+# LABEL to show the accronym with a label
 showAccronymLabel = Label(topFrame, textvariable=accronym,
 													font=("Arial", 32, "bold"), wraplength=500)
 showAccronymLabel.pack(side='top', anchor='center', pady=10)
 
 accronym.set(flashcards.originalCards[flashcards.shuffledKeys[index]])
 
-# show answer with label, starts hidden
+# LABEL to show answer with label, starts hidden
 showAnswerLabel = Label(topFrame, textvariable=answer,
 												font=("Arial", 24, "bold"), wraplength=500, pady=100)
 showAnswerLabel.pack(side='top', anchor='center')
 
 buttonFrame = Frame(root, )
 
-# button to show answer
+# BUTTON to show answer
 showAnswerButton = Button(bottomFrame, text="Show", command=showAnswer, width=13, font=("Arial", 10, "bold"))
 showAnswerButton.pack(side='top', anchor='center', pady=10)
 
-# button to show next card
+# BUTTONS for sorting
+
+
+
+# BUTTON to show next card
 nextButton = Button(bottomFrame, text="Next", command=showNext, width=13, font=("Arial", 10, "bold"))
 
 root.mainloop()

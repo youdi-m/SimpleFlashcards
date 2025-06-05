@@ -2,8 +2,8 @@
 
 ## Features
 
-Reads cards from txt file
+Reads from text file
 
-Sorting feature based on performance
+Sorts cards into new lists depending on performance
 
 GUI
