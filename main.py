@@ -13,31 +13,43 @@ root.tk_setPalette(background='#282828', foreground='#ffffff')
 style = ttk.Style(root)
 style.theme_use("vista")
 
-
-# *** variables
 index = 0
 answer = StringVar(root)
 accronym = StringVar(root)
 
 
-# *** functions
-
 # change answer text to match the answer
 def showAnswer():
 	answer.set(flashcards.shuffledKeys[index])
 	showAnswerButton.pack_forget()
-	nextButton.pack(side='top', anchor='center', pady=10)
-
+	rightButton.pack(side='top', anchor='center', pady=10)
+	wrongButton.pack(side='top', anchor='center', pady=10)
 
 # increment index, get next accronym and set answer text to nothing
-def showNext():
+def sortCard(attempt):
 	global index
-	index += 1
+
+	if attempt == 'right':
+		current_key = flashcards.shuffledKeys[index]
+		flashcards.originalCards.pop(current_key)
+		flashcards.shuffledKeys.pop(index)
+	else:
+		index += 1
+	
+	# Handle wrapping and empty deck
+	if len(flashcards.originalCards) == 0:
+		accronym.set("All done!")
+		answer.set("")
+		return
+	
+	if index >= len(flashcards.shuffledKeys):
+		index = 0
+
 	accronym.set(flashcards.originalCards[flashcards.shuffledKeys[index]])
 	answer.set(" ")
-	nextButton.pack_forget()
+	rightButton.pack_forget()
+	wrongButton.pack_forget()
 	showAnswerButton.pack(side='top', anchor='center', pady=10)
-
 
 # *** GUI elements
 
@@ -70,9 +82,10 @@ showAnswerButton.pack(side='top', anchor='center', pady=10)
 
 # BUTTONS for sorting
 
-
+rightButton = Button(bottomFrame, text="Right", command=lambda: sortCard('right'), width=13, font=("Arial", 10, "bold"))
+wrongButton = Button(bottomFrame, text="Wrong", command=lambda: sortCard('wrong'), width=13, font=("Arial", 10, "bold"))
 
 # BUTTON to show next card
-nextButton = Button(bottomFrame, text="Next", command=showNext, width=13, font=("Arial", 10, "bold"))
+# nextButton = Button(bottomFrame, text="Next", command=showNext, width=13, font=("Arial", 10, "bold"))
 
 root.mainloop()
